@@ -13,17 +13,20 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)  //ignore null values (while serializing and deserializing)
+@JsonIgnoreProperties(ignoreUnknown = true) //"if I don't know the field, I will ignore it". default is false.
 public class StudentDTO {
 
+    @JsonIgnore
     private Long id;
 
     private String firstName;
     private String lastName;
     private String phoneNumber;
-
     private String email;
     private String username;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private LocalDate birthday;

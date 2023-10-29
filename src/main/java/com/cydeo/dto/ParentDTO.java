@@ -13,8 +13,11 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)  //ignore null values (while serializing and deserializing)
+@JsonIgnoreProperties(ignoreUnknown = true) //"if I don't know the field, I will ignore it". default is false.
 public class ParentDTO {
 
+    @JsonIgnore
     private Long id;
 
     private String firstName;
@@ -25,6 +28,7 @@ public class ParentDTO {
     private String email;
     private String username;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //use this field only while deserializing (to java)
     private String password;
 
     private LocalDate birthday;

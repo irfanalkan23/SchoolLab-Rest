@@ -12,8 +12,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)  //ignore null values (while serializing and deserializing)
+@JsonIgnoreProperties(ignoreUnknown = true) //"if I don't know the field, I will ignore it". default is false.
 public class ClassDTO {
 
+    @JsonIgnore
     private Long id;
 
     private String name;
