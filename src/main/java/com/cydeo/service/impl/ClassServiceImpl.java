@@ -1,6 +1,7 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.ClassDTO;
+import com.cydeo.entity.Class;
 import com.cydeo.repository.ClassRepository;
 import com.cydeo.service.ClassService;
 import com.cydeo.util.MapperUtil;

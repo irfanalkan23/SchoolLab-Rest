@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDTO {
-    @JsonIgnore
+
     private Long id;
 
     private String firstName;
@@ -30,6 +30,7 @@ public class StudentDTO {
 
     private Status status;
 
+    @JsonManagedReference(value = "student-address-reference")
     private AddressDTO address;
 
     private ParentDTO parent;
