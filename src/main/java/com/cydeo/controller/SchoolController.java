@@ -4,15 +4,14 @@ import com.cydeo.dto.AddressDTO;
 import com.cydeo.dto.StudentDTO;
 import com.cydeo.dto.TeacherDTO;
 import com.cydeo.dto.ResponseWrapper;
+import com.cydeo.entity.Address;
 import com.cydeo.service.AddressService;
 import com.cydeo.service.ParentService;
 import com.cydeo.service.StudentService;
 import com.cydeo.service.TeacherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class SchoolController {
     @GetMapping("/teachers")
     public List<TeacherDTO> allTeachers(){
         return teacherService.findAll();
-        //Spring is smart enough to take these TeacherDTOs and serialize from java to json
+        //Spring is smart enough to take these TeacherDTOs and serialize from java to json (Jackson)
     }
 
     /* create an endpoint for students where json response includes;
@@ -89,7 +88,12 @@ public class SchoolController {
     consume temperature information from https://weatherstack.com/product based on the city
     */
 
-
+    @PutMapping("/address/{id}")
+    public AddressDTO updateAddress(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO) throws Exception {
+        addressDTO.setId(id);
+        AddressDTO updatedAddress = addressService.update(addressDTO);
+        return updatedAddress;
+    }
 
 
 
