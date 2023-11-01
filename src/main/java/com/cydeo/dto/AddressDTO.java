@@ -44,4 +44,6 @@ public class AddressDTO {
 
     private Integer currentTemperature;
 
+    private String flag;
+
 }
