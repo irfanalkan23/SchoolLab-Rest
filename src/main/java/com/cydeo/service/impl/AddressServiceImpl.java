@@ -4,6 +4,7 @@ import com.cydeo.client.CountryApiClient;
 import com.cydeo.client.WeatherApiClient;
 import com.cydeo.dto.AddressDTO;
 import com.cydeo.entity.Address;
+import com.cydeo.exception.NotFoundException;
 import com.cydeo.repository.AddressRepository;
 import com.cydeo.service.AddressService;
 import com.cydeo.util.MapperUtil;
@@ -43,7 +44,8 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO findById(Long id) throws Exception {
         Address foundAddress = addressRepository.findById(id)
-                .orElseThrow(() -> new Exception("No Address Found!"));
+//                .orElseThrow(() -> new Exception("No Address Found!"));
+                .orElseThrow(() -> new NotFoundException("No Address Found!"));
 
 //         return mapperUtil.convert(foundAddress, new AddressDTO());
         AddressDTO addressDTO = mapperUtil.convert(foundAddress, new AddressDTO());
@@ -57,18 +59,20 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private String retrieveFlagByCountry(String country) {
-        return countryApiClient.getCountryInfo(country).get(0).getFlags().getPng();
+        return countryApiClient.getCountryInfo(country).get(0).getFlags().getPng(); //get(0)- we need to get the first index of the array
     }
 
     private Integer retrieveTemperatureByCity(String city) {
         return weatherApiClient.getCurrentWeather(accessKey,city).getCurrent().getTemperature();
+        //getCurrentWeather() returns WeatherDTO, that's why we add .getCurrent().getTemperature()
     }
 
     @Override
     public AddressDTO update(AddressDTO addressDTO) throws Exception {
 
         addressRepository.findById(addressDTO.getId())
-                .orElseThrow(() -> new Exception("No Address Found!"));
+//                .orElseThrow(() -> new Exception("No Address Found!"));
+                .orElseThrow(() -> new NotFoundException("No Address Found!"));
 
         Address addressToSave = mapperUtil.convert(addressDTO, new Address());
 
