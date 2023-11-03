@@ -139,4 +139,9 @@ INSERT INTO public.course (id, description, course_name)
 VALUES (8,
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
         'Biology');
+
+-- hibernate doesn't know about the data inserted by data.sql, so it tries to create new data with primary key starting from 1
+-- when it tries to create with a primary key that is currently available, we get:
+-- "org.postgres.util.PSQLException: ERROR: duplicate key value violates unique constraint "teacher_pkey" "
+-- the following sql code solves this problem
 SELECT setval(pg_get_serial_sequence('teacher', 'id'), coalesce(max(id),0) + 1, false) FROM public.teacher;

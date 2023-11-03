@@ -39,7 +39,10 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDTO createTeacher(TeacherDTO teacherDTO) {
+        //I'm getting teacher as dto.
+        //So, I need to convert to entity for saving
         Teacher newTeacher = teacherRepository.save(mapperUtil.convert(teacherDTO, new Teacher()));
+        //then, I need to convert back to dto when returning it
         return mapperUtil.convert(newTeacher,new TeacherDTO());
     }
 

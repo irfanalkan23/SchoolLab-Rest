@@ -9,6 +9,7 @@ import com.cydeo.service.AddressService;
 import com.cydeo.service.ParentService;
 import com.cydeo.service.StudentService;
 import com.cydeo.service.TeacherService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -95,9 +96,24 @@ public class SchoolController {
         return updatedAddress;
     }
 
+    /*
+        create an endpoint for creating teacher
+        return Http status 201
+        custom header "teacherId","idCreated"
+        responseWrapper("Teacher is created",teacherInfo)
+     */
 
+    @PostMapping("/teachers")
+    public ResponseEntity<ResponseWrapper> createTeacher(@Valid @RequestBody TeacherDTO teacherDTO){
+        TeacherDTO teacher = teacherService.createTeacher(teacherDTO);
 
+        ResponseWrapper responseWrapper = new ResponseWrapper(true, "Teacher is created."
+                ,HttpStatus.CREATED.value(), teacher);  //custom status
 
+        return ResponseEntity.status(HttpStatus.CREATED)    //actual status
+                .header("teacherId", String.valueOf(teacher.getId()))
+                .body(responseWrapper);
+    }
 
 
 
