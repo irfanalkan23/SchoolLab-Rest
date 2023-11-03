@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.dto.ParentDTO;
 import com.cydeo.entity.Parent;
+import com.cydeo.exception.NotFoundException;
 import com.cydeo.repository.ParentRepository;
 import com.cydeo.service.ParentService;
 import com.cydeo.util.MapperUtil;
@@ -32,7 +33,7 @@ public class ParentServiceImpl implements ParentService {
     @Override
     public ParentDTO findById(Long id) throws Exception {
         Parent foundParent = parentRepository.findById(id)
-                .orElseThrow(() -> new Exception("No Parent Found!"));
+                .orElseThrow(() -> new NotFoundException("No Parent Found!"));
         return mapperUtil.convert(foundParent, new ParentDTO());
     }
 

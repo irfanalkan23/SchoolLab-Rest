@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.dto.CourseDTO;
 import com.cydeo.entity.Course;
+import com.cydeo.exception.NotFoundException;
 import com.cydeo.repository.CourseRepository;
 import com.cydeo.service.CourseService;
 import com.cydeo.util.MapperUtil;
@@ -32,7 +33,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseDTO findById(Long id) throws Exception {
         Course foundCourse = courseRepository.findById(id)
-                .orElseThrow(() -> new Exception("No Course Found!"));
+                .orElseThrow(() -> new NotFoundException("No Course Found!"));
         return mapperUtil.convert(foundCourse, new CourseDTO());
     }
 

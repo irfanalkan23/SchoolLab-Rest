@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.dto.StudentDTO;
 import com.cydeo.entity.Student;
+import com.cydeo.exception.NotFoundException;
 import com.cydeo.repository.StudentRepository;
 import com.cydeo.service.StudentService;
 import com.cydeo.util.MapperUtil;
@@ -32,7 +33,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDTO findById(Long id) throws Exception {
         Student foundStudent = studentRepository.findById(id)
-                .orElseThrow(() -> new Exception("No Student Found!"));
+                .orElseThrow(() -> new NotFoundException("No Student Found!"));
         return mapperUtil.convert(foundStudent, new StudentDTO());
     }
 
